@@ -1,0 +1,212 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% load my_tags %}
+
+{% block extra_css %}
+    <style>
+        .post-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .post-quote {
+            padding: 25px 30px;
+            background: #f8f9fa;
+            border-left: 5px solid #198754; /* bootstrap success */
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #444;
+            border-radius: 6px;
+        }
+
+        .comments-section {
+            border-top: 1px solid #eaeaea;
+            padding-top: 40px;
+        }
+
+        .comment {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .comment-text {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .comment-form textarea {
+            resize: none;
+        }
+
+
+        .comment-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .comment-text {
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .comment-like {
+            text-decoration: none;
+        }
+
+        .comment-like i {
+            color: green;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-lg-8">
+
+                    <!-- Post Header -->
+                    <div class="text-center mb-4">
+                        <h1 class="fw-bold">{{ post.title }}</h1>
+
+                        {% if post.sub_title %}
+                            <p class="text-muted fs-5 mt-2">
+                                {{ post.sub_title }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Post Image -->
+                    <div class="mb-4">
+                        <img src="{{ post.image.url }}"
+                             alt="{{ post.title }}"
+                             class="img-fluid rounded shadow-sm w-100">
+                    </div>
+
+                    <!-- Post Content -->
+                    <div class="post-content mb-5">
+                        {{ post.text|linebreaks }}
+                    </div>
+
+                    <!-- Quote -->
+                    {% if post.quote %}
+                        <blockquote class="post-quote my-5">
+                            “{{ post.quote }}”
+                        </blockquote>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            <!-- Comments Section -->
+            <div class="comments-section mt-5">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+
+                        <h3 class="mb-4">Comments</h3>
+
+                        <div id="comments-wrapper">
+                            {% for comment in comments %}
+                                <div class="comment-item {% if forloop.counter > 3 %}d-none extra-comment{% endif %}">
+                                    <div class="comment-header">
+                                        <strong>{{ comment.user.username }}</strong>
+                                        <span class="comment-date">{{ comment.created_at }}</span>
+                                    </div>
+                                    <p class="comment-text">
+                                        {{ comment.comment }}
+                                    </p>
+                                    <a class="comment-like"
+                                       href="{% url 'blog:comment-like' pk=comment.pk %}?next={{ request.path }}?{{ request.GET.urlencode }}">
+                                        <i class="{% comment_heart_icon request.user comment %}"></i>
+                                    </a>
+                                    {{ comment.likes.count }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        {% if comments|length > 3 %}
+                            <div class="text-center mt-4">
+                                <button id="show-comments-btn"
+                                        class="btn btn-outline-success">
+                                    Show all comments
+                                </button>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+
+                <!-- Add Comment Form -->
+                <div class="comment-form mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h4 class="mb-3">Leave a Comment</h4>
+
+                            <form method="post">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label class="form-label">Comment</label>
+                                    <textarea class="form-control" rows="4" name="comment"
+                                              placeholder="Write your comment..."></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('show-comments-btn');
+            if (!btn) return;
+
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.extra-comment')
+                    .forEach(el => el.classList.remove('d-none'));
+
+                btn.remove();
+            });
+        });
+    </script>
+
+{% endblock %}

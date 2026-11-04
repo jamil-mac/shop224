@@ -1,0 +1,323 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% load my_tags %}
+
+{% block extra_css %}
+    <style>
+        .color-list {
+            display: flex;
+            gap: 10px;
+            padding: 0;
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        .color-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.2s ease;
+        }
+
+        /* Hover effect */
+        .color-dot:hover {
+            transform: scale(1.15);
+            border-color: #333;
+        }
+
+        /* Optional: active/selected state */
+        .color-dot.active {
+            border: 2px solid black;
+            box-shadow: 0 0 0 2px white inset;
+        }
+
+        .product-full {
+            height: 500px;
+        }
+
+        small {
+            color: red;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+
+            {% include 'shop_filters.html' %}
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                            <li class="list-inline-item">
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 pb-4">
+                        <div class="d-flex">
+                            <select class="form-control">
+                                <option>Featured</option>
+                                <option>A to Z</option>
+                                <option>Item</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 product-wap rounded-0 product-full">
+                                <div class="card rounded-0">
+                                    <img class="card-img rounded-0 img-fluid"
+                                         style="width: 100%; height: 300px; object-fit: cover;"
+                                         src="{{ product.image.url }}" alt="{{ product.name }}">
+                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
+                                         style="width: 100%; height: 300px;">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a class="btn btn-success text-white"
+                                                   href="{% url 'products:wishlist-create' pk=product.pk %}?next={{ request.path }}?{{ request.GET.urlencode }}">
+                                                    <i class="{% heart_icon request.user product %}"
+                                                       style="color: rgb(255, 255, 255);"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-success text-white mt-2"
+                                                   href="{% url 'products:detail' pk=product.pk %}">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-success text-white mt-2"
+                                                   href="{% url 'products:cart-create' pk=product.pk %}?next={{ request.path }}?{{ request.GET.urlencode }}">
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{% url 'products:detail' pk=product.pk %}" class="h3 text-decoration-none">
+                                        {{ product.name }}
+                                    </a>
+                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                        <li>
+                                            {% for size in product.sizes.all %}
+                                                {{ size.size }}{% if not forloop.last %}/{% endif %}
+                                            {% endfor %}
+                                        </li>
+
+                                    </ul>
+                                    <ul class="w-100 list-unstyled d-flex gap-2 mb-0">
+                                        <li class="pt-2">
+                                            {% for color in product.colors.all %}
+                                                <span class="color-dot"
+                                                      style="background-color: {{ color.color }};"></span>
+                                            {% endfor %}
+
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled d-flex justify-content-start mb-1">
+                                        <li>
+                                            <i class="text-warning fa fa-star"></i>
+                                            <i class="text-warning fa fa-star"></i>
+                                            <i class="text-warning fa fa-star"></i>
+                                            <i class="text-muted fa fa-star"></i>
+                                            <i class="text-muted fa fa-star"></i>
+                                        </li>
+                                    </ul>
+                                    <p class="text-left mb-0">
+                                        ${{ product.get_price }}
+                                        {% if product.is_discount %}
+                                            <small><strike>${{ product.price }}</strike></small>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                                   href="?page=1" tabindex="-1">1</a>
+                            </li>
+                            {% if page_obj.previous_page_number != 1 %}
+
+                                <li class="page-item">
+                                    <a href="?page={{ page_obj.previous_page_number }}"
+                                       class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0">
+                                        {{ page_obj.previous_page_number }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        <li class="page-item">
+                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                               href="?page={{ page_obj.number }}">
+                                {{ page_obj.number }}
+                            </a>
+                        </li>
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                                   href="?page={{ page_obj.next_page_number }}" tabindex="-1">
+                                    {{ page_obj.next_page_number }}
+                                </a>
+
+                            </li>
+                            {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                                <li class="page-item">
+                                    <a href="?page={{ page_obj.paginator.num_pages }}"
+                                       class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0">
+                                        {{ page_obj.paginator.num_pages }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+
+    <!-- Start Brands -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Our Brands</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+
+                        <!--Carousel Wrapper-->
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example"
+                                 data-bs-ride="carousel">
+                                <!--Slides-->
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End First slide-->
+
+                                    <!--Second slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Second slide-->
+
+                                    <!--Third slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img"
+                                                                 src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Third slide-->
+
+                                </div>
+                                <!--End Slides-->
+                            </div>
+                        </div>
+                        <!--End Carousel Wrapper-->
+
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Brands-->
+
+
+{% endblock %}

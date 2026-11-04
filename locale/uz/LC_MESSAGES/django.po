@@ -1,0 +1,266 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 15:36+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: accounts/models.py:7
+msgid "avatar"
+msgstr "profil rasmi"
+
+#: blog/models.py:8 blog/models.py:22
+msgid "title"
+msgstr "sarlavha"
+
+#: blog/models.py:9 blog/models.py:24
+msgid "sub_title"
+msgstr "kichik sarlavha"
+
+#: blog/models.py:10 blog/models.py:25
+msgid "text"
+msgstr "matn"
+
+#: blog/models.py:11 blog/models.py:23 products/models.py:8
+#: products/models.py:75
+msgid "image"
+msgstr "rasm"
+
+#: blog/models.py:17
+msgid "Banner"
+msgstr ""
+
+#: blog/models.py:18
+msgid "Banners"
+msgstr "Bannerlar"
+
+#: blog/models.py:26
+msgid "quote"
+msgstr "iqtibos"
+
+#: blog/models.py:32
+msgid "Post"
+msgstr "post"
+
+#: blog/models.py:33
+msgid "Posts"
+msgstr "Postlar"
+
+#: blog/models.py:41 blog/models.py:65
+msgid "user"
+msgstr "foydalanuvchi"
+
+#: blog/models.py:47
+msgid "post"
+msgstr "post"
+
+#: blog/models.py:49 blog/models.py:71
+msgid "comment"
+msgstr "izoh"
+
+#: blog/models.py:50
+msgid "created_at"
+msgstr "yaratilgan sana"
+
+#: blog/models.py:56
+msgid "Comment"
+msgstr "Izoh"
+
+#: blog/models.py:57
+msgid "Comments"
+msgstr "izohlar"
+
+#: blog/models.py:78
+msgid "CommentLike"
+msgstr "Yoqtirilgan izoh"
+
+#: blog/models.py:79
+msgid "CommentLikes"
+msgstr "Yoqtirilgan izohlar"
+
+#: contacts/models.py:6 products/models.py:7 products/models.py:19
+#: products/models.py:52
+msgid "name"
+msgstr "nom"
+
+#: contacts/models.py:7
+msgid "email"
+msgstr "elektron pochta"
+
+#: contacts/models.py:8
+msgid "subject"
+msgstr "mavzu"
+
+#: contacts/models.py:9
+msgid "message"
+msgstr "xabar"
+
+#: contacts/models.py:17
+msgid "Contact"
+msgstr "Kontakt"
+
+#: contacts/models.py:18
+msgid "Contacts"
+msgstr "Kontaktlar"
+
+#: products/models.py:14
+msgid "Category"
+msgstr "Kategoriya"
+
+#: products/models.py:15
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+#: products/models.py:25
+msgid "Brand"
+msgstr "Brend"
+
+#: products/models.py:26
+msgid "Brands"
+msgstr "Brendlar"
+
+#: products/models.py:30
+msgid "color"
+msgstr "rang"
+
+#: products/models.py:36
+msgid "Color"
+msgstr "Rang"
+
+#: products/models.py:37
+msgid "Colors"
+msgstr "Ranglar"
+
+#: products/models.py:41
+msgid "size"
+msgstr "o'lcham"
+
+#: products/models.py:47
+msgid "Size"
+msgstr "O'lcham"
+
+#: products/models.py:48
+msgid "Sizes"
+msgstr "O'lchamlar"
+
+#: products/models.py:57
+msgid "category"
+msgstr "kategoriya"
+
+#: products/models.py:63
+msgid "brand"
+msgstr "brend"
+
+#: products/models.py:68
+msgid "colors"
+msgstr "ranglar"
+
+#: products/models.py:73
+msgid "sizes"
+msgstr "o'lchamlar"
+
+#: products/models.py:76
+msgid "price"
+msgstr "narx"
+
+#: products/models.py:77
+msgid "short_description"
+msgstr "qisqa tavsif"
+
+#: products/models.py:78
+msgid "long_description"
+msgstr "uzun tavsif"
+
+#: products/models.py:79
+msgid "discount"
+msgstr "chegirma"
+
+#: products/models.py:85
+msgid "wishlist"
+msgstr "istaklar ro'yxati"
+
+#: products/models.py:91
+msgid "cart"
+msgstr "savatcha"
+
+#: products/models.py:94
+msgid "created at"
+msgstr "yaratilgan sana"
+
+#: products/models.py:100
+msgid "Product"
+msgstr "Mahsulot"
+
+#: products/models.py:101
+msgid "Products"
+msgstr "Mahsulotlar"
+
+#: templates/about.html:65
+msgid "About Us"
+msgstr "Biz haqimizda"
+
+#: templates/about.html:67
+msgid ""
+"\n"
+"                            Lorem ipsum dolor sit amet, consectetur "
+"adipisicing elit, sed do eiusmod\n"
+"                            tempor incididunt ut labore et dolore magna "
+"aliqua. Ut enim ad minim veniam,\n"
+"                            quis nostrud exercitation ullamco laboris nisi "
+"ut aliquip ex ea commodo consequat.\n"
+"                        "
+msgstr ""
+
+#: templates/about.html:86
+msgid "Our Services"
+msgstr "Bizning xizmatlar"
+
+#: templates/about.html:88
+msgid ""
+"\n"
+"                        Lorem ipsum dolor sit amet, consectetur adipisicing "
+"elit, sed do eiusmod\n"
+"                        Lorem ipsum dolor sit amet.\n"
+"                    "
+msgstr ""
+
+#: templates/about.html:100
+msgid "Delivery Services"
+msgstr "yetkazib berish xizmatlari"
+
+#: templates/about.html:107
+msgid "Shipping & Return"
+msgstr "Yetkazib berish va Qaytarish"
+
+#: templates/about.html:114
+msgid "Promotion"
+msgstr ""
+
+#: templates/about.html:121
+msgid "24 Hours Service"
+msgstr "24 soat xizmat"
+
+#: templates/about.html:133
+msgid "Our Brands"
+msgstr "Bizning brendlar"
+
+#: templates/about.html:135
+msgid ""
+"\n"
+"                            Lorem ipsum dolor sit amet, consectetur "
+"adipisicing elit, sed do eiusmod\n"
+"                            Lorem ipsum dolor sit amet.\n"
+"                        "
+msgstr ""

@@ -1,0 +1,332 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register</title>
+    <style>
+        :root {
+            --primary: #59ab6e;
+            --primary-dark: #488a59;
+            --primary-light: #7bc18e;
+            --primary-transparent: rgba(89, 171, 110, 0.1);
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --background: #f9f9f9;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .header {
+            background: var(--primary);
+            padding: 25px 30px;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.2) 0%,
+                    rgba(255, 255, 255, 0) 100%
+            );
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-transparent);
+            outline: none;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(89, 171, 110, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(89, 171, 110, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(89, 171, 110, 0.4);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Create Account</h1>
+        <p>Join our community</p>
+    </div>
+    <div class="form-container">
+        <form id="register-form" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fullname">Username</label>
+                <input
+                        type="text"
+                        id="fullname"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                />
+                <div class="error-message" id="fullname-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="fullname">First Name</label>
+                <input
+                        type="text"
+                        id="fullname"
+                        name="first_name"
+                        placeholder="Enter your first name"
+                        required
+                />
+                <div class="error-message" id="fullname-error"></div>
+            </div>
+            <div class="form-group">
+                <label for="fullname">Last Name</label>
+                <input
+                        type="text"
+                        id="fullname"
+                        name="last_name"
+                        placeholder="Enter your last name"
+                        required
+                />
+                <div class="error-message" id="fullname-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                />
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                        type="password"
+                        id="password"
+                        name="password1"
+                        placeholder="Create a password"
+                        required
+                />
+                <span class="password-toggle" id="password-toggle">👁️</span>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input
+                        type="password"
+                        id="confirm-password"
+                        name="password2"
+                        placeholder="Confirm your password"
+                        required
+                />
+                <span class="password-toggle" id="confirm-password-toggle">👁️</span>
+                <div class="error-message" id="confirm-password-error"></div>
+            </div>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="{% url 'accounts:login' %}">Sign In</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const togglePassword = document.getElementById("password-toggle");
+        const toggleConfirmPassword = document.getElementById(
+            "confirm-password-toggle"
+        );
+        const passwordField = document.getElementById("password");
+        const confirmPasswordField =
+            document.getElementById("confirm-password");
+
+        togglePassword.addEventListener("click", function () {
+            const type =
+                passwordField.getAttribute("type") === "password"
+                    ? "text"
+                    : "password";
+            passwordField.setAttribute("type", type);
+            togglePassword.textContent = type === "password" ? "👁️" : "🔒";
+        });
+
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type =
+                confirmPasswordField.getAttribute("type") === "password"
+                    ? "text"
+                    : "password";
+            confirmPasswordField.setAttribute("type", type);
+            toggleConfirmPassword.textContent = type === "password" ? "👁️" : "🔒";
+        });
+
+    });
+</script>
+</body>
+</html>

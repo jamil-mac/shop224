@@ -1,0 +1,78 @@
+<div class="col-lg-3">
+    <h2 class="h4 pb-3">Filters</h2>
+
+    <form method="get">
+
+        <!-- Category -->
+        <div class="mb-4">
+            <h5 class="h6">Category</h5>
+            {% for category in categories %}
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="category"
+                           value="{{ category.id }}">
+                    <label class="form-check-label">
+                        {{ category.name }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Price -->
+        {#        <div class="mb-4">#}
+        {#            <h5 class="h6">Price</h5>#}
+        {#            <input type="number" name="min_price" class="form-control mb-2"#}
+        {#                   placeholder="Min"#}
+        {#                   value="0">#}
+        {#            <input type="number" name="max_price" class="form-control"#}
+        {#                   placeholder="Max"#}
+        {#                   value="100000">#}
+        {#        </div>#}
+
+        <!-- Brand -->
+        <div class="mb-4">
+            <h5 class="h6">Brand</h5>
+            {% for brand in brands %}
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="brand"
+                           value="{{ brand.id }}">
+                    <label class="form-check-label">
+                        {{ brand.name }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Size -->
+        <div class="mb-4">
+            <h5 class="h6">Size</h5>
+            {% for size in sizes %}
+                <p class="badge border me-1 mb-1 p-2" style="color: black">
+                    <input type="checkbox"
+                           name="size"
+                           value="{{ size.id }}">
+                    {{ size.size }}
+                </p>
+            {% endfor %}
+        </div>
+
+        <!-- Color -->
+        <div class="mb-4">
+            <h5 class="h6">Color</h5>
+            {% for color in colors %}
+                <span class="me-2" style="display: block;">
+                    <input type="checkbox"
+                           name="color"
+                           value="{{ color.id }}">
+                    {{ color.color }}
+                </span>
+            {% endfor %}
+        </div>
+
+        <button class="btn btn-outline-danger w-45">Clear Filters</button>
+        <button class="btn btn-success w-45">Apply filters</button>
+    </form>
+</div>
