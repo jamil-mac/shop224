@@ -163,5 +163,4 @@ cython_debug/
 .idea/
 static
 media
-assets
 settings_local.py
